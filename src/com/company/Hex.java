@@ -18,6 +18,10 @@ public class Hex {
 
     String terrainString;
 
+
+
+    int terrainTypeInt;
+
     Integer xCoord;
     Integer yCoord;
     /*
@@ -38,19 +42,33 @@ public class Hex {
             {2,1}, {0,2}, {-2,1}, {-2,-1}, {0,-2}, {2,-1}
     };
 
-    private Hex(int terrainInt) {
+    static int[][] NeighborWithinTwoDist;
+
+    /* static int[][] InitializeNeighborWithinTwoDist() {
+            
+    } */
+
+    Hex[] Neighbors;
+
+    /* private Hex(int terrainInt) {
         this.terrainString = Terrain.valueOf(terrainInt).name();
+        this.terrainTypeInt = terrainInt;
         this.HexID = nextHexID;
         nextHexID++;
         allHexesList.add(this);
-    }
+    } */
 
     public Hex(int x, int y, int terrain) {
-        this(terrain);
+        this.terrainString = Terrain.valueOf(terrain).name();
+        this.terrainTypeInt = terrain;
+        this.HexID = nextHexID;
+        nextHexID++;
+        allHexesList.add(this);
+
         this.xCoord = x;
         this.yCoord = y;
-        Key intArray = new Key(x,y);
-        hexesByCoords.put(intArray, this);
+        Key intPair = new Key(x,y);
+        hexesByCoords.put(intPair, this);
     }
 
 
@@ -85,7 +103,50 @@ public class Hex {
         hexArray[3] = new Hex(xCoord - 2, yCoord - 1,random.nextInt(5));
         hexArray[4] = new Hex(xCoord, yCoord - 2,random.nextInt(5));
         hexArray[5] = new Hex(xCoord + 2, yCoord - 1,random.nextInt(5));
+        Neighbors = hexArray;
         return hexArray;
+    }
+
+    public Hex[] makeMissingNeighbors() {
+        Hex[] hexArray = new Hex[6];
+
+        /* if(xCoord == null) {
+            xCoord = 0;
+        }
+        if(yCoord == null) {
+            yCoord = 0;
+        } */
+
+        int ourX = getX();
+        int ourY = getY();
+
+        Random random = new Random();
+        int i;
+        int[] x;
+        Key k;
+        for (i = 0; i<6; i++) {
+            x = NeighborDist[i];
+            k = new Key(ourX + x[0], ourY + x[1]);
+            if (hexesByCoords.containsKey(k)) {
+                hexArray[i] = hexesByCoords.get(k);
+            }
+            else {
+                hexArray[i] = new Hex(ourX + x[0], ourY+ x[1], random.nextInt(5));
+            }
+        }
+
+        return hexArray;
+    }
+
+    public void makeTwoAwayNeighbors() {
+        Hex[] hexArray = this.makeMissingNeighbors();
+        //Hex[] outHexArray = new Hex[12];
+
+        for (Hex hex:hexArray) {
+            hex.makeMissingNeighbors();
+        }
+
+
     }
 
     public Boolean hasNorthNeighbor() {
@@ -127,7 +188,71 @@ public class Hex {
                 hexArray[i] = new Hex(NeighborDist[i][0], NeighborDist[i][1], random.nextInt(5));
             }
         }
+        Neighbors = hexArray;
         return hexArray;
+    }
+
+    public boolean hasSwampNeighbor() {
+        if (Neighbors.length<6) {
+            this.getNeighbors();
+        }
+        int i;
+        Hex x;
+        for (i = 0; i<Neighbors.length; i++) {
+            x = Neighbors[i];
+            if (x.terrainTypeInt == 3) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Hex getNeighborByDirectionInt(int i) {
+        if ((0 <= i) && (i < 6)) {
+            Hex ret;
+            int[] c = NeighborDist[i];
+            int x = getX() + c[0];
+            int y = getY() + c[1];
+            Key k = new Key(x, y);
+            if (hexesByCoords.containsKey(k)) {
+                ret = hexesByCoords.get(k);
+                return ret;
+            }
+            else {
+                return null;
+            }
+        }
+        else {
+            return getNeighborByDirectionInt(i % 6);
+        }
+    }
+
+    public Hex getNorthEastNeighbor() {
+        return getNeighborByDirectionInt(0);
+    }
+
+    public Hex getNorthNeighbor() {
+        return getNeighborByDirectionInt(1);
+    }
+
+    public Hex getNorthWestNeighbor() {
+        return getNeighborByDirectionInt(2);
+    }
+
+    public Hex getSouthWestNeighbor() {
+        return getNeighborByDirectionInt(3);
+    }
+
+    public Hex getSouthNeighbor() {
+        return getNeighborByDirectionInt(4);
+    }
+
+    public Hex getSouthEastNeighbor() {
+        return getNeighborByDirectionInt(5);
+    }
+
+    public int getTerrainTypeInt() {
+        return terrainTypeInt;
     }
 
     public static int checkNumberOfHexes() {
