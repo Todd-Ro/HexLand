@@ -3,6 +3,16 @@ package com.company;
 public class Main {
 
 	public static void main(String[] args) {
+		Hex nullHex = Hex.getHexByCoords(1,2);
+		Key oneTwo = new Key(1,2);
+		if (!Hex.hexesByCoords.containsKey(oneTwo)) {
+			System.out.println("No Hex at 1, 2");
+		}
+		else {
+			System.out.println(nullHex.getTerrainString());
+		}
+
+
 		int i = 0;
 		Hex baseHex = new Hex(0, 0, i);
 		System.out.println(baseHex.getTerrainString());

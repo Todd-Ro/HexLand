@@ -73,6 +73,9 @@ public class Hex {
 
 
     public String getTerrainString() {
+        /*if (terrainString.isEmpty()) {
+            return null;
+        } */
         return terrainString;
     }
     public int[] getCoords() {
@@ -265,5 +268,10 @@ public class Hex {
 
     public static Hex getHexById(int id) {
         return allHexesList.get(id);
+    }
+
+    public static Hex getHexByCoords(int x, int y) {
+        Key k = new Key(x, y);
+        return hexesByCoords.get(k);
     }
 }
