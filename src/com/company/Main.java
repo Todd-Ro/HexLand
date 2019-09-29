@@ -23,7 +23,7 @@ public class Main {
 		baseHex.makeMissingNeighbors();
 		System.out.println(baseHex.hasNorthNeighbor());
 		System.out.print( "\n" );
-		Hex[] baseNeighbors = baseHex.getNeighbors();
+		Hex[] baseNeighbors = baseHex.getAndSetNeighbors();
 		for (Hex h: baseNeighbors) {
 			System.out.println(h.getX() + ", " + h.getY());
 			System.out.println(h.getTerrainString());

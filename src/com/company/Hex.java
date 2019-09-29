@@ -50,6 +50,12 @@ public class Hex {
 
     Hex[] Neighbors;
 
+    boolean bordersWater;
+    boolean bordersMountain;
+    boolean bordersForest;
+    boolean bordersSwamp;
+    boolean bordersDesert;
+
     /* private Hex(int terrainInt) {
         this.terrainString = Terrain.valueOf(terrainInt).name();
         this.terrainTypeInt = terrainInt;
@@ -171,7 +177,7 @@ public class Hex {
             System.out.print(x + " ");
      */
 
-    public Hex[] getNeighbors() {
+    public Hex[] getAndSetNeighbors() {
         Hex[] hexArray = new Hex[6];
         Key NEintArray = new Key(xCoord + 2, yCoord + 1);
         Key Nints = new Key(xCoord, yCoord + 2);
@@ -189,6 +195,27 @@ public class Hex {
             }
             else {
                 hexArray[i] = new Hex(NeighborDist[i][0], NeighborDist[i][1], random.nextInt(5));
+            }
+        }
+        Neighbors = hexArray;
+        return hexArray;
+    }
+
+    public Hex[] getNeighbors() {
+        Hex[] hexArray = new Hex[6];
+        Key NEintArray = new Key(xCoord + 2, yCoord + 1);
+        Key Nints = new Key(xCoord, yCoord + 2);
+        Key NWints = new Key(xCoord-2, yCoord+1);
+        Key SWints = new Key(xCoord-2, yCoord-1);
+        Key Sints = new Key(xCoord, yCoord-2);
+        Key SEints = new Key(xCoord+2, yCoord-1);
+        Random random = new Random();
+        Key[] Keys = new Key[] {NEintArray, Nints, NWints, SWints, Sints, SEints};
+        int i; Key x;
+        for (i = 0; i<Keys.length; i++) {
+            x = Keys[i];
+            if (hexesByCoords.containsKey(x)) {
+                hexArray[i] = hexesByCoords.get(x);
             }
         }
         Neighbors = hexArray;
@@ -273,5 +300,33 @@ public class Hex {
     public static Hex getHexByCoords(int x, int y) {
         Key k = new Key(x, y);
         return hexesByCoords.get(k);
+    }
+
+    public void setTerrainNeighborBool() {
+        this.bordersWater = false;
+        this.bordersMountain = false;
+        this.bordersForest = false;
+        this.bordersSwamp = false;
+        this.bordersDesert = false;
+
+        Hex[] neighbors = getNeighbors();
+        for (Hex aNeighbor : neighbors) {
+            int t = aNeighbor.getTerrainTypeInt();
+            if (t == 0) {
+                this.bordersWater = true;
+            }
+            if (t == 1) {
+                this.bordersMountain = true;
+            }
+            if (t == 2) {
+                this.bordersForest = true;
+            }
+            if (t == 3) {
+                this.bordersSwamp = true;
+            }
+            if (t == 4) {
+                this.bordersDesert = true;
+            }
+        }
     }
 }
