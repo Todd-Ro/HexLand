@@ -2,6 +2,13 @@ package com.company;
 
 public class Key {
 
+    /*Key class is used in the hexesByCoords HashMap, but the changes to the way
+    equality is assessed mean that, unlike an array of two ints,
+    two Key objects with the exact same int values will never result in
+    two distinct keys in the dictionary.
+     */
+
+
     private final int x;
     private final int y;
 
