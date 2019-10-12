@@ -14,6 +14,10 @@ public class Hex {
     static ArrayList<Hex> allHexesList = new ArrayList<Hex>();
     static HashMap<Key, Hex> hexesByCoords = new HashMap<Key, Hex>();
 
+    //TODO - Use a data structure that can hold information about how many
+    // - hexes of each terrain type there are total, and a method to compile this
+    // - information and set the values in the data structure.
+
 
 
     String terrainString;
@@ -44,6 +48,8 @@ public class Hex {
 
     static int[][] NeighborWithinTwoDist;
 
+    //TODO Make method that initializes an array like NeighborDist that specifies
+    // - the coordinate distances to hexes within distance two.
     /* static int[][] InitializeNeighborWithinTwoDist() {
             
     } */
