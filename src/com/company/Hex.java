@@ -164,6 +164,8 @@ public class Hex {
 
     }
 
+
+
     public Boolean hasNorthNeighbor() {
         Key intArray = new Key(xCoord, yCoord + 2);
         if (hexesByCoords.containsKey(intArray)) {
@@ -242,6 +244,8 @@ public class Hex {
         }
         return false;
     }
+
+    //TODO Make method that checks for presence of something within two or three tiles
 
     public Hex getNeighborByDirectionInt(int i) {
         if ((0 <= i) && (i < 6)) {
