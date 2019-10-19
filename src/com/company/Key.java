@@ -9,6 +9,8 @@ public class Key {
      */
 
 
+
+
     private final int x;
     private final int y;
 
@@ -32,4 +34,17 @@ public class Key {
         return result;
     }
 
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + getX() + ", " + getY() + ")";
+    }
 }

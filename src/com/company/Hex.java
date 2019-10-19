@@ -46,13 +46,34 @@ public class Hex {
             {2,1}, {0,2}, {-2,1}, {-2,-1}, {0,-2}, {2,-1}
     };
 
-    static int[][] NeighborWithinTwoDist;
+    static ArrayList<Key> NeighborWithinTwoDist;
 
     //TODO Make method that initializes an array like NeighborDist that specifies
     // - the coordinate distances to hexes within distance two.
-    /* static int[][] InitializeNeighborWithinTwoDist() {
-            
-    } */
+    static ArrayList<Key> InitializeNeighborWithinTwoDist() {
+        ArrayList<Key> start = new ArrayList<Key>();
+        ArrayList<Key> ret = new ArrayList<Key>();
+            for (int[] intPair : NeighborDist) {
+                Key k = new Key(intPair[0], intPair[1]);
+                start.add(k);
+                ret.add(k);
+        }
+            //System.out.println(start);
+
+            for (Key k : start) {
+                for (int[] intPair : NeighborDist) {
+                    int x = k.getX() + intPair[0];
+                    int y = k.getY() + intPair[1];
+                    Key kNew = new Key(x, y);
+                    if (!ret.contains(kNew)) {
+                        ret.add(kNew);
+                    }
+                }
+            }
+
+            NeighborWithinTwoDist = ret;
+            return ret;
+    }
 
     Hex[] Neighbors;
 

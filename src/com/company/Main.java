@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.ArrayList;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -53,5 +55,7 @@ public class Main {
 		System.out.println(northTwo.getX() + ", " + northTwo.getY());
 		System.out.println(northTwo.getTerrainString());
 
+		ArrayList<Key> neighborsWithinTwo = Hex.InitializeNeighborWithinTwoDist();
+		System.out.println(neighborsWithinTwo);
 	}
 }
