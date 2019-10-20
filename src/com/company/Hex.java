@@ -75,6 +75,31 @@ public class Hex {
             return ret;
     }
 
+    static ArrayList<Key> NeighborWithinThreeDist;
+
+    static ArrayList<Key> InitializeNeighborWithinThreeDist() {
+        if (NeighborWithinTwoDist.isEmpty()) {
+            InitializeNeighborWithinTwoDist();
+        }
+
+        ArrayList<Key> ret = new ArrayList<>(NeighborWithinTwoDist);
+
+
+        for (Key k : NeighborWithinTwoDist) {
+            for (int[] intPair : NeighborDist) {
+                int x = k.getX() + intPair[0];
+                int y = k.getY() + intPair[1];
+                Key kNew = new Key(x, y);
+                if (!ret.contains(kNew)) {
+                    ret.add(kNew);
+                }
+            }
+        }
+
+        NeighborWithinThreeDist = ret;
+        return ret;
+    }
+
     Hex[] Neighbors;
 
     boolean bordersWater;

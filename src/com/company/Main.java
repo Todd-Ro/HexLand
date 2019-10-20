@@ -57,5 +57,8 @@ public class Main {
 
 		ArrayList<Key> neighborsWithinTwo = Hex.InitializeNeighborWithinTwoDist();
 		System.out.println(neighborsWithinTwo);
+
+		ArrayList<Key> neighborsWithinThree = Hex.InitializeNeighborWithinThreeDist();
+		System.out.println(neighborsWithinThree);
 	}
 }
