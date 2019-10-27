@@ -292,6 +292,24 @@ public class Hex {
     }
 
     //TODO Make method that checks for presence of something within two or three tiles
+    //TODO test method for checking within two
+
+    public boolean hasSwampWithinTwo() {
+        if (NeighborWithinTwoDist.isEmpty()) {
+            InitializeNeighborWithinTwoDist();
+        }
+        boolean ret = false;
+        for (Key k : NeighborWithinTwoDist) {
+            int checkX = k.getX() + this.getX();
+            int checkY = k.getY() + this.getY();
+            Key checkSpot = new Key(checkX, checkY);
+            Hex checkedHex = hexesByCoords.get(checkSpot);
+            if (checkedHex.getTerrainTypeInt() == 3) {
+                return true;
+            }
+        }
+        return ret;
+    }
 
     public Hex getNeighborByDirectionInt(int i) {
         if ((0 <= i) && (i < 6)) {
