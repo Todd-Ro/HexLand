@@ -75,6 +75,10 @@ public class Hex {
             return ret;
     }
 
+    /* The Key class is useful, not just for storing actual coordinates in the hexesByCoords HashMap, but also for
+    keeping track of relative coordinates / vectors in a way that helps protect against putting the same vector in
+    a data structure twice.
+     */
     static ArrayList<Key> NeighborWithinThreeDist;
 
     static ArrayList<Key> InitializeNeighborWithinThreeDist() {
